@@ -1,0 +1,23 @@
+{
+head:{
+   text:'SCHEDULED mode'
+},
+signal: [
+  ['Output',
+  {name: 'GPS',                     wave: '0.1..0......1..0...'},
+  ],
+  {},
+  ['Input',
+  {name: 'GPS fix',                 wave: 'X..................'},
+  ],
+  {},
+  ['Timers',
+  {name: 'Interval = 5',            wave: 'l.H....l....H....l.'},
+  {name: 'Maximum Acquisition = 3', wave: 'l.h..L......h..L...'},
+  {name: 'No Fix Timeout  = 0',     wave: 'X..................'},
+  ],
+],
+foot:{
+   tick:0
+}
+}

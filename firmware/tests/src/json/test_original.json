@@ -1,0 +1,13 @@
+{
+    "test":"value",
+    "foo":"b\"a and \\ r",
+    "array":[1,2,"three",4],
+    "baz":{"a":"b"},
+    "num":123.45,
+    "bool":true,
+    "utf8":"$¢€𤪤",
+    "key":"value\n\"newline\"",
+    "obj":{"true":true},
+  "name":"value",
+  "value":"real"
+}

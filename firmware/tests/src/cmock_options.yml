@@ -1,0 +1,11 @@
+:cmock:
+  :plugins:
+     - :callback
+     - :ignore
+     - :return_thru_ptr
+     - :ignore_arg
+     - :expect_any_args
+  :strippables:
+     - ['(.*)_callback(.*)','(.*)_event_handler(.*)']
+  :ignore:
+      :args_only
