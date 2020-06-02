@@ -1,0 +1,8 @@
+include LICENSE
+include MANIFEST.in
+include README.rst
+include Dockerfile
+
+recursive-include aws_sam *
+recursive-include certificates *
+recursive-include sample_config *

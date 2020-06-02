@@ -1,0 +1,36 @@
+#!/usr/bin/python3
+import argparse
+import datetime
+import json
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--file', type=argparse.FileType(mode='r'), required=True)
+
+
+args = parser.parse_args()
+
+
+def bulletin_to_dict(f):
+    json_dict = {}
+    json_dict['bulletin'] = []
+    for i in f:
+        try:
+            (sat_code, var_unused_1, var_unused_2, var_unused_3, var_unused_4, year, month, day, hour, minute, sec, p1, p2, p3, p4, p5, p6) = \
+                i.split()
+        except:
+            continue
+        epoch = datetime.datetime(1970, 1, 1, 0, 0, 0)
+        dt = datetime.datetime(int(year), int(month), int(day), int(hour), int(minute), int(sec))
+        delta = (dt - epoch).total_seconds()
+        json_dict['bulletin'].append(
+            {
+              'satelliteCode': sat_code,
+              'secondsSinceEpoch': int(delta),
+              'params': [ float(p1), float(p2), float(p3), float(p4), float(p5), float(p6) ]
+            })
+    return json_dict
+
+
+d = bulletin_to_dict(args.file)
+print(json.dumps(d))

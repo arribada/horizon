@@ -1,0 +1,502 @@
+#!/usr/bin/python3
+
+import argparse
+import logging
+import sys
+import os
+import json
+import datetime
+import time
+from arribada_tools import backend, interface, config, log, gps_config, __version__
+from bluepy.btle import Scanner
+
+
+logger = logging.getLogger(__name__)
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--version', action='store_true', required=False)
+parser.add_argument('--debug', action='store_true', required=False)
+parser.add_argument('--datetime', action='store_true', required=False)
+parser.add_argument('--gps_almanac', type=argparse.FileType('rb'), required=False)
+parser.add_argument('--gps_config', type=argparse.FileType('r'), required=False)
+parser.add_argument('--black_list', type=argparse.FileType('r'), required=False)
+parser.add_argument('--white_list', type=argparse.FileType('r'), required=False)
+parser.add_argument('--firmware_update_main', type=argparse.FileType('rb'), required=False)
+parser.add_argument('--firmware_update_ble', type=argparse.FileType('rb'), required=False)
+parser.add_argument('--log_skip_download', action='store_true', required=False)
+parser.add_argument('--log_erase', action='store_true', required=False)
+parser.add_argument('--log_create', action='store_true', required=False)
+parser.add_argument('--reset', action='store_true', required=False)
+parser.add_argument('--config', type=argparse.FileType('r'), required=False)
+parser.add_argument('--connection_retry', default=3, type=int, required=False)
+parser.add_argument('--connection_timeout', default=10.0, type=float, required=False)
+parser.add_argument('--scan_timeout', default=15, type=int, required=False)
+
+
+args = parser.parse_args()
+
+
+if not any(vars(args).values()):
+    parser.print_help()
+    sys.exit()
+
+if args.version:
+    print('Version:', __version__)
+    sys.exit()
+
+if args.debug:
+    logging.basicConfig(format='%(asctime)s\t%(module)s\t%(levelname)s\t%(message)s', level=logging.DEBUG)
+else:
+    logging.basicConfig(format='%(asctime)s\t%(module)s\t%(levelname)s\t%(message)s', level=logging.INFO)
+
+
+device_dict = {}
+discovered_devices = []
+whitelist_devices = []
+blacklist_devices = []
+completed_devices = []
+
+
+SCAN_NAME = 'Arribada_Tracker'
+HCI_DEV = 0 if 'HCI_DEV' not in os.environ else int(os.environ['HCI_DEV'])
+
+
+if args.white_list:
+    whitelist_devices = [x.lower() for x in args.white_list.read().split()]
+
+if args.black_list:
+    blacklist_devices = [x.lower() for x in args.black_list.read().split()]
+
+
+gps_almanac_data = None
+gps_config_data = None
+config_data = None
+fw_main_data = None
+fw_ble_data = None
+
+if args.gps_almanac:
+    gps_almanac_data = args.gps_almanac.read()
+
+if args.gps_config:
+    gps_config_data = args.gps_config.read()
+
+if args.config:
+    config_data = args.config.read()
+
+if args.firmware_update_main:
+    fw_main_data = args.firmware_update_main.read()
+
+if args.firmware_update_ble:
+    fw_ble_data = args.firmware_update_ble
+
+
+class Scan(object):
+    def __init__(self, timeout):
+        self._scanner = Scanner(HCI_DEV)
+        self._timeout = timeout
+
+    def scan(self):
+        devices = []
+        timeout = self._timeout
+        while timeout > 0 and not devices:
+            all_devices = self._scanner.scan(1)
+            devices = []
+            for dev in all_devices:
+                dev_addr = dev.addr
+                for (_, desc, value) in dev.getScanData():
+                    if desc == 'Complete Local Name' and value == SCAN_NAME and \
+                        dev_addr not in discovered_devices and \
+                        dev_addr not in completed_devices and \
+                        dev_addr not in blacklist_devices:
+                        devices = devices + [ dev ]
+            if whitelist_devices:
+                devices = [ dev for dev in devices if dev.addr in whitelist_devices ]
+            timeout = timeout - 1
+        return list(set(devices))
+
+
+
+class Device(object):
+    def __init__(self, dev_addr):
+        self._dev_addr = dev_addr
+        self._connection_retries = args.connection_retry
+        self._reset_flag = args.reset
+        self._set_datetime_flag = args.datetime
+        self._gps_almanac_flag = gps_almanac_data
+        self._gps_config_flag = gps_config_data
+        self._log_download_flag = not args.log_skip_download
+        self._log_download_success = args.log_skip_download
+        self._log_erase_flag = args.log_erase
+        self._log_create_flag = args.log_create
+        self._get_status_flag = True
+        self._config_flag = config_data
+        self._fw_main_flag = fw_main_data
+        self._fw_ble_flag = fw_ble_data
+        self._wait_for_hard_reset = False
+        self._backend = None
+
+    def _all_tasks_complete(self):
+        return not self._log_download_flag and \
+            not self._set_datetime_flag and \
+            not self._reset_flag and \
+            not self._gps_config_flag and \
+            not self._gps_almanac_flag and \
+            not self._get_status_flag and \
+            not self._log_erase_flag and \
+            not self._log_create_flag and \
+            not self._get_status_flag and \
+            not self._config_flag and \
+            not self._fw_main_flag and \
+            not self._fw_ble_flag
+
+    def _gps_almanac_task(self, cfg):
+        logger.info('Writing GPS almanac to device=%s', self._dev_addr)
+        try:
+            gps_bridge = gps_config.GPSBridgedBackend(self._backend)
+            gps_cfg = gps_config.GPSConfig(gps_bridge)
+            cfg.gps_config(True)
+            gps_cfg.mga_ano_session(self._gps_almanac_flag)
+            cfg.gps_config(False)
+        except:
+            logger.error('Error writing GPS almanac to device=%s', self._dev_addr)
+            try:
+                cfg.gps_config(False)
+            except:
+                pass
+            return 1
+        
+        try:
+            cfg.gps_config(False)
+        except:
+            return 1
+
+        logger.info('GPS almanac applied successfully to device=%s', self._dev_addr)
+        self._gps_almanac_flag = False
+        return 0
+
+    def _gps_config_task(self, cfg):
+        logger.info('Writing GPS configuration to device=%s', self._dev_addr)
+        try:
+            gps_bridge = gps_config.GPSBridgedBackend(self._backend)
+            gps_cfg = gps_config.GPSConfig(gps_bridge)
+            cfg.gps_config(True)
+            gps_cfg.ascii_config_session(self._gps_config_flag)
+            cfg.gps_config(False)
+        except:
+            logger.error('Error writing GPS configuration to device=%s', self._dev_addr)
+            try:
+                cfg.gps_config(False)
+            except:
+                pass
+            return 1
+        
+        try:
+            cfg.gps_config(False)
+        except:
+            return 1
+
+        logger.info('GPS configuration applied successfully to device=%s', self._dev_addr)
+        self._gps_config_flag = False
+        return 0
+
+    def _get_status_task(self, cfg):
+        logger.info('Reading status from device=%s', self._dev_addr)
+        try:
+            status = cfg.get_status()
+        except:
+            logger.error('Failed to read status from device=%s', self._dev_addr)
+            return 1
+
+        try:
+            battery = cfg.get_battery_status()
+        except:
+            logger.error('Failed to read battery status from device=%s', self._dev_addr)
+            return 1
+
+        try:
+            log_file_size = json.loads(cfg.read_json_configuration(tag=config.ConfigItem_Logging_FileSize.tag))
+            log_file_size = log_file_size['logging']
+        except:
+            logger.error('Failed to read log file size from device=%s', self._dev_addr)
+            return 1
+
+        try:
+            last_known_pos = json.loads(cfg.read_json_configuration(tag=config.ConfigItem_GPS_LastKnownPosition.tag))
+            last_known_pos = last_known_pos['gps']['lastKnownPosition']
+        except Exception as e:
+            if type(e) is interface.ExceptionBackendCommsError and \
+                e.args[0] == 'CMD_ERROR_CONFIG_TAG_NOT_SET':
+                logger.warn('Last known GPS location is not set on device=%s', self._dev_addr)
+                last_known_pos = {}
+            else:
+                logger.error('Failed to read GPS last known position from device=%s', self._dev_addr)
+                return 1
+
+        try:
+            sys_device_id = json.loads(cfg.read_json_configuration(tag=config.ConfigItem_System_DeviceIdentifier.tag))
+            sys_device_id = sys_device_id['system']['deviceIdentifier']
+        except Exception as e:
+            if type(e) is interface.ExceptionBackendCommsError and \
+                e.args[0] == 'CMD_ERROR_CONFIG_TAG_NOT_SET':
+                logger.warn('System device ID is not set on device=%s', self._dev_addr)
+                sys_device_id = 'null'
+            else:
+                logger.error('Failed to read system device ID from device=%s', self._dev_addr)
+                return 1
+
+        logger.info('Status for device=%s: id=%s status=%s battery=%s log_file=%s last_pos=%s',
+                    self._dev_addr, sys_device_id, status, battery, log_file_size,
+                    last_known_pos)
+
+        # Mark task as complete
+        self._get_status_flag = False
+        return 0
+
+    def _log_download_task(self, cfg):
+        logger.info('Downloading log file from device=%s', self._dev_addr)
+        try:
+            now = time.time()
+            ts = datetime.datetime.fromtimestamp(now).strftime('%d%m%Y_%H%M%S')
+            filename = 'ble_auto_%s_%s_log_file.bin' % (ts, self._dev_addr.replace(':', ''))
+            log_file = open(filename, 'wb')
+            log_file.write(cfg.read_log_file(0, 0))
+            log_file.close()
+            self._log_filename = filename
+        except Exception as e:
+            logger.error('Error downloading log file for device=%s', self._dev_addr)
+            if type(e) is interface.ExceptionBackendCommsError and \
+                e.args[0] == 'CMD_ERROR_FILE_NOT_FOUND':
+                    logger.error('Log file does not exist on device=%s', self._dev_addr)
+                    self._log_download_flag = False  # Don't retry
+                    return 0
+            return 1
+
+        self._log_download_flag = False
+        self._log_download_success = True
+        return 0
+
+    def _log_erase_task(self, cfg):
+        logger.info('Erase log file from device=%s', self._dev_addr)
+        try:
+            cfg.erase_log_file()
+        except Exception as e:
+            logger.error('Error erasing log file for device=%s', self._dev_addr)
+            if type(e) is interface.ExceptionBackendCommsError and \
+                e.args[0] == 'CMD_ERROR_FILE_NOT_FOUND':
+                    logger.error('Log file does not exist on device=%s', self._dev_addr)
+                    self._log_erase_flag = False  # Don't retry
+                    return 0
+            return 1
+        self._log_erase_flag = False
+        return 0
+
+    def _log_create_task(self, cfg):
+        logger.info('Creating log file on device=%s', self._dev_addr)
+        try:
+            cfg.create_log_file(file_type='LINEAR')
+        except Exception as e:
+            logger.error('Error creating log file for device=%s', self._dev_addr)
+            if type(e) is interface.ExceptionBackendCommsError and \
+                e.args[0] == 'CMD_ERROR_FILE_ALREADY_EXISTS':
+                    logger.error('Log file already exists on device=%s', self._dev_addr)
+                    self._log_create_flag = False  # Don't retry
+                    return 0
+            return 1
+        self._log_create_flag = False
+        return 0
+
+    def _config_task(self, cfg):
+        logger.info('Writing configuration file to device=%s', self._dev_addr)
+        try:
+            cfg.erase_configuration()
+            cfg.write_json_configuration(self._config_flag)
+            cfg.save_configuration()
+        except:
+            logger.error('Error writing configuration file to device=%s', self._dev_addr)
+            return 1
+
+        self._config_flag = False
+        return 0
+
+    def _set_datetime_task(self, cfg):
+        logger.info('Setting datetime on device=%s', self._dev_addr)
+        try:
+            cfg.write_json_configuration('{"rtc": { "dateTime": "%s"}}' % str(datetime.datetime.now()))
+        except:
+            return 1
+        self._set_datetime_flag = False
+        return 0
+
+    def _reset_task(self, cfg):
+        logger.info('Resetting device=%s', self._dev_addr)
+        try:
+            cfg.reset('STM32')
+        except:
+            pass
+        self._reset_flag = False
+        self._wait_for_hard_reset = True
+        return 0
+
+    def _fw_update_main_task(self, cfg):
+        logger.info('Updating STM32 firmware on device=%s', self._dev_addr)
+        try:
+            cfg.fw_upgrade('STM32', self._fw_main_flag)
+        except:
+            logger.error('Error updating STM32 firmware on device=%s', self._dev_addr)
+            return 1
+        logger.info('STM32 upgrade completed successfully!')
+        self._wait_for_hard_reset = True
+        self._get_status_flag = True
+        self._fw_main_flag = False
+        return 0
+
+    def _fw_update_ble_task(self, cfg):
+        logger.info('Updating BLE firmware on device=%s', self._dev_addr)
+        try:
+            cfg.fw_upgrade('BLE', self._fw_ble_flag)
+        except:
+            logger.error('Error updating BLE firmware on device=%s', self._dev_addr)
+            return 1
+        logger.info('BLE upgrade completed successfully on device=%s', self._dev_addr)
+        self._wait_for_hard_reset = True
+        self._fw_ble_flag = False
+        return 0
+
+    def _process_tasks(self):
+        
+        error_flag = 0
+        cfg = interface.ConfigInterface(self._backend)
+
+        if self._get_status_flag:
+            error_flag |= self._get_status_task(cfg)
+            if error_flag:
+                return error_flag # Must have valid status to proceed
+
+        if self._log_download_flag:
+            error_flag |= self._log_download_task(cfg)
+
+        if self._log_erase_flag and not self._log_download_flag:
+            error_flag |= self._log_erase_task(cfg)
+
+        if self._log_create_flag:
+            error_flag |= self._log_create_task(cfg)
+
+        if self._set_datetime_flag:
+            error_flag |= self._set_datetime_task(cfg)
+
+        if self._config_flag:
+            error_flag |= self._config_task(cfg)
+
+        if self._gps_config_flag:
+            error_flag |= self._gps_config_task(cfg)
+
+        if self._gps_almanac_flag:
+            error_flag |= self._gps_almanac_task(cfg)
+
+        if self._fw_main_flag:
+            error_flag |= self._fw_update_main_task(cfg)
+            # Always return immediately since STM32 will hard reset
+            return error_flag
+
+        if self._fw_ble_flag:
+            error_flag |= self._fw_update_ble_task(cfg)
+            # Always return immediately since nRF52 will hard reset
+            return error_flag
+
+        if self._reset_flag:
+            error_flag |= self._reset_task(cfg)
+
+        return error_flag
+
+    def _disconnect(self):
+        if self._backend:
+            try:
+                self._backend.cleanup()
+            except:
+                pass
+
+            self._backend = None
+
+    def service(self):
+
+        if self._connection_retries == 0 or self._all_tasks_complete():
+            return True
+
+        if not self._backend:
+            try:
+                logger.info('Connecting to device=%s', self._dev_addr)
+                self._backend = backend.BackendBluetooth(dev_addr=self._dev_addr,
+                                                         conn_timeout=args.connection_timeout)
+            except:
+                logger.info('Error connecting to device=%s', self._dev_addr)
+                self._backend = None
+
+        if self._backend:
+            logger.info('Processing tasks for device=%s', self._dev_addr)
+            error = self._process_tasks()
+            if error:
+                self._connection_retries = self._connection_retries - 1
+            logger.info('Disconnecting from device=%s', self._dev_addr)
+            self._disconnect()
+        else:
+            self._connection_retries = self._connection_retries - 1
+
+        if self._wait_for_hard_reset and not self._all_tasks_complete() and self._connection_retries > 0:
+            logger.info('Waiting for hard reset to complete on device=%s', self._dev_addr)
+            self._wait_for_hard_reset = False
+            time.sleep(10)
+
+        return self._connection_retries == 0 or self._all_tasks_complete()
+
+
+# Scanning and servicing task
+scanner = Scan(args.scan_timeout)
+
+while True:
+    if not discovered_devices:
+        # Scan task
+        logger.info('Scanning for new devices...')
+        new_devices = scanner.scan()
+        for dev in new_devices:
+            logger.info('Discovered device=%s rssi=%s', dev.addr, dev.rssi)
+            device_dict[dev.addr] = Device(dev.addr)
+            discovered_devices = discovered_devices + [ dev.addr ]
+
+    # Service task
+    if discovered_devices:
+        curr_dev_addr = discovered_devices[0]
+        device = device_dict[curr_dev_addr]
+        logger.debug('Servicing device=%s', curr_dev_addr)
+        if device.service():
+            discovered_devices = discovered_devices[1:]
+            completed_devices = completed_devices + [ curr_dev_addr ]
+    else:
+        # No more discovered devices to service
+        logger.info('No new devices discovered')
+        break
+
+logger.info('Post-processing devices...')
+
+for dev in completed_devices:
+    device = device_dict[dev]
+    if not args.log_skip_download and device._log_download_success:
+        logger.info('Converting log file binary to JSON for device=%s', device._dev_addr)
+        with open(device._log_filename, 'rb') as log_file:
+            data = log_file.read()
+            objects = log.decode_all(data)
+            del data # Mark unused data as deletable
+            log_file.close()
+            filename = device._log_filename[:-3] + 'json'
+            with open(filename, 'w') as log_file:
+                for i in objects:
+                    if i.name == 'LogStart' or i.name == 'LogEnd':
+                        pass
+                    else:
+                        d = {}
+                        d[i.name] = {}
+                        if hasattr(i, 'fields'):
+                            for j in i.fields:
+                                d[i.name][j] = getattr(i, j)
+                        log_file.write(json.dumps(d) + '\n')
+                log_file.close()

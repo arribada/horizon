@@ -1,0 +1,25 @@
+pipeline {
+    agent {
+    	dockerfile {
+    		additionalBuildArgs '--build-arg CACHEBUST=$(date +%s)'
+    	}
+    }
+    stages {
+        stage('Create Release') {
+            steps {
+                sh 'python3 setup.py sdist --format=zip'
+            }
+            post { 
+                success { 
+                    archiveArtifacts 'dist/*.zip'
+                }
+            }
+        }
+        stage('Check Version') {
+            steps {
+                sh 'tracker_config --version'
+                sh 'aws_config --version'
+            }
+        }
+    }
+}
