@@ -1,0 +1,26 @@
+{
+  "thing_name": "test-thing",
+  "update": {
+  "current": {
+    "state": {
+      "desired": {
+        "device_status": {
+          "last_gps_location": {
+            "longitude": 1111,
+            "latitude": 1111,
+            "timestamp": 1553162865
+          },
+          "last_cellular_connected_timestamp": 343982,
+          "last_sat_tx_timestamp": 327498324,
+          "next_sat_tx_timestamp": 327498324,
+          "battery_level": 87,
+          "configuration_version": 0,
+          "firmware_version": 1,
+          "last_log_file_read_pos": 4343
+        }
+      }
+    }
+  },
+  "timestamp": 1553162890
+  }
+}

@@ -1,0 +1,66 @@
+{
+    "version": 1,
+    "accelerometer": {
+        "config": 0, 
+        "highThreshold": 0, 
+        "logEnable": false, 
+        "maximumAquisitionTime": 0, 
+        "mode": "PERIODIC", 
+        "sampleRate": 0, 
+        "scheduledAquisitionInterval": 0
+    }, 
+    "battery": {
+        "logEnable": true, 
+        "lowThreshold": 0
+    }, 
+    "bluetooth": {
+        "advertisingInterval": 0, 
+        "connectionInterval": 0, 
+        "inactivityTimeout": 0, 
+        "logEnable": true, 
+        "phyMode": "1_MBPS", 
+        "scheduledDuration": 0, 
+        "scheduledInterval": 0, 
+        "triggerControl": ["SCHEDULED", "ONE_SHOT"]
+    }, 
+    "logging": {
+        "dateTimeStampEnable": true, 
+        "enable": true, 
+        "startEndSyncEnable": false
+    }, 
+    "pressureSensor": {
+        "highThreshold": 0, 
+        "logEnable": false, 
+        "lowThreshold": 0, 
+        "maximumAquisitionTime": 0, 
+        "mode": "PERIODIC", 
+        "sampleRate": 0, 
+        "scheduledAquisitionInterval": 0
+    }, 
+    "saltwaterSwitch": {
+        "hysteresisPeriod": 0, 
+        "logEnable": false
+    },
+    "gps": {
+        "logPositionEnable": true,
+        "logTTFFEnable": true,
+        "logDebugEnable": true,
+        "maximumAquisitionTime": 20,
+        "scheduledAquisitionInterval": 120,
+        "scheduledAquisitionNoFixTimeout": 0,
+        "testFixHoldTime": 60,
+        "mode": "SCHEDULED"
+    },
+    "system": {
+        "deviceName": "fred"
+    },
+    "iot": {
+        "enable": true,
+        "cellular": {
+            "statusFilter": ["LAST_GPS_LOCATION", "BATTERY_LEVEL"],
+            "aws": {
+                "arn": "helloworld"
+            }
+        }
+    }
+}

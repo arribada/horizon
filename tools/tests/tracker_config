@@ -1,0 +1,149 @@
+#!/usr/bin/python3
+
+import argparse
+import traceback
+import logging
+import sys
+import json
+import datetime
+from arribada_tools import backend, interface, config, __version__
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--ble_addr', dest='bluetooth_addr', required=False)
+parser.add_argument('--debug', action='store_true', required=False)
+parser.add_argument('--write_config', type=argparse.FileType('r'), required=False)
+parser.add_argument('--read_config', type=argparse.FileType('w'), required=False)
+parser.add_argument('--read_log', type=argparse.FileType('wb'), required=False)
+parser.add_argument('--read_flash', type=argparse.FileType('wb'), required=False)
+parser.add_argument('--battery', action='store_true', required=False)
+parser.add_argument('--status', action='store_true', required=False)
+parser.add_argument('--get_version', action='store_true', required=False)
+parser.add_argument('--erase_config', action='store_true', required=False)
+parser.add_argument('--erase_log', action='store_true', required=False)
+parser.add_argument('--create_log', required=False)
+parser.add_argument('--reset', required=False)
+parser.add_argument('--test_mode', type=lambda s: [i.strip() for i in s.split(',')], required=False)
+parser.add_argument('--set_date_time', required=False)
+parser.add_argument('--set_date_time_utc', action='store_true', required=False)
+parser.add_argument('--get_date_time', action='store_true', required=False)
+parser.add_argument('--firmware_type', required=False)
+parser.add_argument('--firmware', type=argparse.FileType('rb'), required=False)
+parser.add_argument('--version', action='store_true', required=False)
+parser.add_argument('--id', required=False)
+parser.add_argument('--list_ids', action='store_true', required=False)
+
+args = parser.parse_args()
+comms_backend = None
+
+if not any(vars(args).values()):
+    parser.print_help()
+    sys.exit(2)
+
+if args.version:
+    print('Version:', __version__)
+    sys.exit()
+        
+try:
+
+    if args.debug:
+        logging.basicConfig(format='%(asctime)s\t%(module)s\t%(levelname)s\t%(message)s', level=logging.DEBUG)
+    else:
+        logging.basicConfig(format='%(asctime)s\t%(module)s\t%(levelname)s\t%(message)s', level=logging.WARN)
+
+    if args.bluetooth_addr:
+        comms_backend = backend.BackendBluetooth(dev_addr=args.bluetooth_addr)
+    elif args.id:
+        comms_backend = backend.BackendUsb()
+        # Iterate through all devices, comparing each to the given ID
+        devs = comms_backend.get_devices()
+        for i in range(len(devs)):
+            comms_backend.cleanup()
+            comms_backend = backend.BackendUsb(dev_index=i)
+            cfg = interface.ConfigInterface(comms_backend)
+            dev_id = cfg.get_version()["unique_device_identifier"] # Compare device IDs
+            if args.id == dev_id:
+                break
+        else:
+            print("Error: Device with ID: %s not found" % str(args.id))
+            sys.exit(1)
+    else:
+        comms_backend = backend.BackendUsb()
+    
+    cfg = interface.ConfigInterface(comms_backend)
+    
+    if args.read_log:
+        args.read_log.write(cfg.read_log_file(0, 0))
+    
+    if args.erase_log:
+        cfg.erase_log_file()
+    
+    if args.create_log:
+        cfg.create_log_file(args.create_log)
+    
+    if args.erase_config:
+        cfg.erase_configuration()
+    
+    if args.write_config:
+        cfg.write_json_configuration(args.write_config.read())
+    
+    if args.set_date_time:
+        logging.warn('Please consider using --setdatetimeutc instead')
+        cfg.write_json_configuration(json='{"rtc": { "dateTime": "%s"}}' % args.set_date_time, erase=False)
+
+    if args.set_date_time_utc:
+        cfg.write_json_configuration(json='{"rtc": { "dateTime": "%s"}}' % str(datetime.datetime.utcnow()), erase=False)
+
+    if args.get_date_time:
+        print(cfg.read_json_configuration(tag=config.ConfigItem_RTC_CurrentDateTime.tag))
+    
+    if args.read_config:
+        args.read_config.write(cfg.read_json_configuration())
+
+    if args.test_mode:
+        cfg.test_mode(args.test_mode)
+    
+    if args.status:
+        print(json.dumps(cfg.get_status(), indent=4))
+
+    if args.get_version:
+        print(json.dumps(cfg.get_version(), indent=4))
+    
+    if args.battery:
+        print(json.dumps(cfg.get_battery_status()))
+    
+    if args.reset:
+        cfg.reset(args.reset)
+
+    if args.firmware_type and args.firmware:
+        cfg.fw_upgrade(args.firmware_type, args.firmware.read())
+
+    if args.read_flash:
+        args.read_flash.write(cfg.read_flash_file())
+    
+    if args.list_ids:
+        # Store current USB index for reconnection
+        current_index = comms_backend.get_dev_index()
+        # Iterate through all devices, printing the ID of each
+        devs = comms_backend.get_devices()
+        logging.debug(devs)
+        device_ids = []
+        for i in range(len(devs)):
+            comms_backend.cleanup()
+            comms_backend = backend.BackendUsb(dev_index=i)
+            cfg = interface.ConfigInterface(comms_backend)
+            version = cfg.get_version()
+            device_ids.append(version["unique_device_identifier"])
+        print(json.dumps(device_ids))
+        # Reconnect to previous device
+        comms_backend.cleanup()
+        comms_backend = backend.BackendUsb(dev_index=current_index)
+        cfg = interface.ConfigInterface(comms_backend)
+except:
+    if args.debug:
+        traceback.print_exc()
+    else:
+        print("Unexpected error: %s" % str(sys.exc_info()))
+    sys.exit(1)
+finally:
+    if comms_backend:
+        comms_backend.cleanup()
