@@ -1,0 +1,1 @@
+JLinkGDBServerCL -USB -device STM32F072VB -endian little -if SWD -speed 4000 -noir -LocalhostOnly -port 2331

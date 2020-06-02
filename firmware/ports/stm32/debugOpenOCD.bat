@@ -1,0 +1,1 @@
+"../../../Toolchain/OpenOCD-20170821/bin/openocd" -s "/../../../Toolchain/OpenOCD-20170821/share/openocd/scripts" -f board/stm32f0discovery.cfg

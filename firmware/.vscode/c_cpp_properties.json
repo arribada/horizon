@@ -1,0 +1,48 @@
+{
+    "configurations": [
+        {
+            "name": "NRF52840",
+            "includePath": [
+                "${workspaceRoot}/",
+                "${workspaceRoot}/core/**",
+                "${workspaceRoot}/syshal/**",
+                "${workspaceRoot}/devices/**",
+                "${workspaceRoot}/ports/nrf52840/",
+                "${workspaceRoot}/ports/nrf52840/boards/plastic_tracker_v1",
+                "${workspaceRoot}/ports/nrf52840/drivers/ble/**",
+                "${workspaceRoot}/ports/nrf52840/drivers/nRF5_SDK_15.2.0/modules/nrfx/hal/",
+                "${workspaceRoot}/ports/nrf52840/drivers/nRF5_SDK_15.2.0/modules/nrfx/",
+                "${workspaceRoot}/ports/nrf52840/drivers/nRF5_SDK_15.2.0/modules/nrfx/drivers/include/",
+                "${workspaceRoot}/ports/nrf52840/drivers/nRF5_SDK_15.2.0/integration/nrfx/**",
+                "${workspaceRoot}/ports/nrf52840/drivers/nRF5_SDK_15.2.0/modules/nrfx/soc",
+                "${workspaceRoot}/ports/nrf52840/drivers/nRF5_SDK_15.2.0/modules/nrfx/mdk",
+                "${workspaceRoot}/ports/nrf52840/drivers/nRF5_SDK_15.2.0/external/fprintf",
+                "${workspaceRoot}/ports/nrf52840/drivers/nRF5_SDK_15.2.0/components/toolchain/cmsis/include/",
+                "${workspaceRoot}/ports/nrf52840/drivers/nRF5_SDK_15.2.0/components/libraries/**",
+                "${workspaceRoot}/ports/nrf52840/drivers/nRF5_SDK_15.2.0/components/ble/**",
+                "${workspaceRoot}/ports/nrf52840/drivers/nRF5_SDK_15.2.0/components/boards/",
+                "${workspaceRoot}/ports/nrf52840/drivers/nRF5_SDK_15.2.0/components/softdevice/common/",
+                "${workspaceRoot}/ports/nrf52840/drivers/nRF5_SDK_15.2.0/components/softdevice/s140/headers/"
+            ],
+            "defines": [
+                "BOARD_TESTER_DEF",
+                "BOARD_PCA10059",
+                "CONFIG_GPIO_AS_PINRESET",
+                "CONFIG_NFCT_PINS_AS_GPIOS",
+                "FLOAT_ABI_HARD",
+                "NRF52840_XXAA",
+                "NRF_SD_BLE_API_VERSION=6",
+                "S140",
+                "SOFTDEVICE_PRESENT",
+                "SWI_DISABLE0",
+                "DEBUG_COLOR",
+                "DEBUG"
+            ],
+            "compilerPath": "${env:GCC_ARM}/arm-none-eabi-gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-x64"
+        }
+    ],
+    "version": 4
+}

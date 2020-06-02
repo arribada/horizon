@@ -1,0 +1,16 @@
+{
+    "state": {
+        "desired": {
+            "device_update": {
+                "firmware_update": {
+                    "url": {
+                        "domain": "arribada.s3.amazonaws.com",
+                        "path": "/f99f1395-dbef-4032-aebc-d01d21b55cf6?AWSAccessKeyId=AKIAIPZT2EDQFBIJHOWA&Expires=1585394885&Signature=%2F%2Fabi%2BYo8%2FGd69yfB3L2Pk3MEGs%3D",
+                        "port": 443
+                    },
+                    "version": 2
+                }
+            }
+        }
+    }
+}

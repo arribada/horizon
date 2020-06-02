@@ -1,0 +1,17 @@
+{
+  "state": {
+    "desired": {
+        "device_status": {
+            "last_log_file_read_pos": 1421,
+            "last_gps_location": { "longitude": -12.3, "latitude": 23.43233, "timestamp": 5635123 },
+            "last_cellular_connected_timestamp": 232,
+            "last_sat_tx_timestamp": 234443,
+            "next_sat_tx_timestamp": 12332,
+            "battery_level": 40,
+            "battery_voltage": 23,
+            "configuration_version": 4,
+            "firmware_version": 3
+        }
+    }
+  }
+}
