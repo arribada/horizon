@@ -1,0 +1,64 @@
+ports/stm32/build/
+*.sublime-project
+*.sublime-workspace
+*.gcda
+*.gcno
+*-results.xml
+*.o
+*.log
+ports/nrf52840/build/
+tests/src/build/
+tests/src/googletest-release-1.8.1/
+tests/src/mocks/Mock*.c
+tests/src/mocks/Mock*.h
+tests/src/environment_gtest
+ports/nrf52840/bootloader/build/
+devices/artic/prepas/result1.dat
+devices/artic/prepas/result.dat
+devices/artic/prepas/result _NP_5_10.txt
+devices/artic/prepas/result _NP_5_1.txt
+devices/artic/prepas/prueba.exe
+devices/artic/prepas/prepastest/test_prepas_c.exe
+devices/artic/prepas/prepastest/log_NP_5_1.dat
+devices/artic/prepas/prepastest/description Prepas english.doc
+devices/artic/prepas/prepas_all_5_1.cfg
+devices/artic/prepas/prepas_NP_5_10.cfg
+devices/artic/prepas/prepas_NP_5_1.cfg
+devices/artic/prepas/prepas.cfg
+devices/artic/prepas/log_all_5_1.dat
+devices/artic/prepas/log_NP_5_10.dat
+devices/artic/prepas/log_NP_5_1.dat
+devices/artic/prepas/description Prepas english.doc
+devices/artic/prepas/bulletin__ALL.dat
+devices/artic/prepas/bulletin__.dat
+devices/artic/prepas/bulletin_NP.dat
+devices/artic/prepas/bulletin.dat
+devices/artic/prepas/prepastest/test_prepas_c.c
+devices/artic/prepas/prepastest/result_all_5_1.txt
+devices/artic/prepas/prepastest/result.dat
+devices/artic/prepas/prepastest/result _NP_5_10.txt
+devices/artic/prepas/prepastest/log_all_5_1.dat
+devices/artic/prepas/prepastest/log_NP_5_10.dat
+devices/artic/prepas/prepastest/bulletin_NP.dat
+devices/artic/prepas/prepastest/prueba.exe
+devices/artic/prepas/prepastest/prepas_all_5_1.cfg
+devices/artic/prepas/prepastest/prepas_NP_5_10.cfg
+devices/artic/prepas/prepastest/prepas_NP_5_1.cfg
+devices/artic/prepas/prepastest/prepas.h
+devices/artic/prepas/prepastest/prepas.cfg
+devices/artic/prepas/prepastest/bulletin.dat
+devices/artic/prepas/trace.dat
+devices/artic/prepas/test_prepas_c.exe
+devices/artic/prepas/result_all_5_1.txt
+devices/artic/prepas/prepastest/result _NP_5_1.txt
+devices/artic/prepas/prepastest/bulletin__.dat
+devices/artic/prepas/prepastest/prepas.c
+tests/src/cmock/
+
+ports/linux/syshal/nrf_rtc\.c
+
+tests/src/certificates/CelullarTestPurple\.cert
+
+tests/src/certificates/CelullarTestPurple\.key
+
+tests/src/certificates/CelullarTestPurple\.pubkey
