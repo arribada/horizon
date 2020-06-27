@@ -1,0 +1,16 @@
+{
+    "state": {
+        "desired": {
+            "device_update": {
+                "configuration_update": {
+                    "url": {
+                        "domain": "arribada2.s3.amazonaws.com",
+                        "path": "/dd2eaae2-b564-415c-bd14-67a7e03a9b7b?AWSAccessKeyId=AKIAIPZT2EDQFBIJHOWA&Expires=1585394952&Signature=eYfbXSIui5XNQ4i0L%2BpbxNOuXrw%3D",
+                        "port": 1231
+                    },
+                    "version": 1
+                }
+            }
+        }
+    }
+}

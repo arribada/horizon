@@ -1,0 +1,22 @@
+{
+head:{
+   text:'SWITCH_TRIGGERED mode'
+},
+signal: [
+  ['Output',
+  {name: 'GPS',                      wave: '0.1.....0...1..0...'},
+  ],
+  {},
+  ['Input',
+  {name: 'Saltwater Switch',         wave: 'L.H.....L...H..L...'},
+  ],
+  {},
+  ['Timers',
+  {name: 'Saltwater Hysteresis = 0', wave: 'X..................'},
+  {name: 'Maximum Acquisition  = 0', wave: 'X..................'},
+  ],
+],
+foot:{
+   tick:0
+}
+}

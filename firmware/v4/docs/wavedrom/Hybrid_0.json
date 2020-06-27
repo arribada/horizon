@@ -1,0 +1,25 @@
+{
+head:{
+   text:'HYBRID mode'
+},
+signal: [
+  ['Output',
+  {name: 'GPS',                      wave: '0.1..0.......1.0...'},
+  ],
+  {},
+  ['Input',
+  {name: 'GPS fix',                  wave: '0..1.0.............'},
+  {name: 'Saltwater Switch',         wave: 'L.H.....l..........'},
+  ],
+  {},
+  ['Timers',
+  {name: 'Saltwater Hysteresis = 2', wave: 'l.......h.l........'},
+  {name: 'Interval = 4',             wave: 'l..h....l....H....l'},
+  {name: 'Maximum Acquisition = 3',  wave: 'l.h..L.......h..l..'},
+  {name: 'No Fix Timeout  = 2',      wave: 'l.hl.........h.L...'},
+  ],
+],
+foot:{
+   tick:0
+}
+}

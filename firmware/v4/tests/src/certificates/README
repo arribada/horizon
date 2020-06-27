@@ -1,0 +1,12 @@
+README
+======
+
+This directory can be used for storing device keys and certificates.
+
+The VeriSign-Class-3-Public-Primary-Certification-Authority-G5.pem certificate is pre-installed and should be used as the root CA for authentication of the Amazon AWS service by the cellular module.
+
+All other certificates and keys shall be dynamically created by the end user into this directory by using the aws_config tool.  These files shall be named according to the thingName ie thingName.pem, thingName.key.
+
+In order to provision the cellular module, the following command should be used for each thing that is created:
+
+cellular_config --root_ca VeriSign-Class-3-Public-Primary-Certification-Authority-G5.pem --cert thingName.pem --key thingName.key

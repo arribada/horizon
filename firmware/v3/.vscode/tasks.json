@@ -1,0 +1,67 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build",
+            "type": "shell",
+            "command": "${env:GNU_MAKE}/make",
+            "args": ["-j$(nproc)"],
+            "windows": {
+                "args": ["-j%NUMBER_OF_PROCESSORS%"]
+            },
+            "options": {  
+                "cwd": "${workspaceFolder}/ports/nrf52840"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Clean",
+            "type": "shell",
+            "command": "${env:GNU_MAKE}/make",
+            "args": ["clean"],
+            "options": {
+                "cwd": "${workspaceFolder}/ports/nrf52840"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Flash",
+            "type": "shell",
+            "command": "${env:GNU_MAKE}/make",
+            "args": [
+                "-j$(nproc)",
+                "flash"
+            ],
+            "windows": {
+                "args": [
+                    "-j%NUMBER_OF_PROCESSORS%",
+                    "flash"
+                ],
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/ports/nrf52840"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Run Tests",
+            "type": "shell",
+            "command": "./build_tests.sh && ./run_tests.sh",
+            "windows": {
+                "command": "build_tests.bat && run_tests.bat"
+            },
+            "args": ["clean"],
+            "options": {
+                "cwd": "${workspaceFolder}/tests"
+            },
+            "group": "test",
+            "problemMatcher": []
+        },
+    ]
+}
