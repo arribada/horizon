@@ -806,9 +806,9 @@ class ConfigItem_BLE_DeviceAddress(ConfigItem):
     def unpack(self, data):
         ConfigItem.unpack(self, data)
         device_id = binascii.hexlify(self.deviceAddress[::-1])
-        new_id = b''
+        new_id = ""
         for i in range(len(device_id)):
-            new_id = new_id + device_id[i]
+            new_id = new_id + chr(device_id[i]).upper()
             if i & 1 and i != (len(device_id)-1):
                 new_id = new_id + ':'
         self.deviceAddress = new_id
@@ -1364,9 +1364,9 @@ class ConfigItem_IOT_Satellite_Artic(ConfigItem):
         ConfigItem.unpack(self, data)
 
         device_id = binascii.hexlify(self.deviceAddress[::-1])
-        new_id = b''
+        new_id = ""
         for i in range(len(device_id)):
-            new_id = new_id + device_id[i]
+            new_id = new_id + chr(device_id[i]).upper()
             if i & 1 and i != (len(device_id)-1):
                 new_id = new_id + ':'
         self.deviceAddress = new_id
@@ -1379,13 +1379,13 @@ class ConfigItem_IOT_Satellite_Artic(ConfigItem):
         while i < len(bulletin_raw):
             (sat_code, timestamp, f1, f2, f3, f4, f5, f6) = struct.unpack_from(fmt, bulletin_raw, i)
             i = i + struct.calcsize(fmt)
-            if sat_code[0] != '\x00':
-                bulletin.append({'satelliteCode':sat_code,
+            if sat_code[0] != 0:
+                bulletin.append({'satelliteCode':sat_code.decode('ascii'),
                                  'secondsSinceEpoch':timestamp,
                                  'params': [f1,f2,f3,f4,f5,f6]})
             else:
                 break
-
+        
         self.bulletin = bulletin
 
 

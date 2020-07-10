@@ -105,9 +105,14 @@ class BluetoothTracker():
         return self._buffer.read(self._buffer.occupancy())
 
     def readFull(self, length, timeout=0):
-        # Read up until length has been reached
-        while self._buffer.occupancy() < length:
+        # Read up until length has been reached or we timeout
+        current_occupancy = self._buffer.occupancy()
+        while current_occupancy < length:
             self._periph.waitForNotifications(timeout)
+            if current_occupancy == self._buffer.occupancy():
+                logger.error("Receive timed out")
+                break
+            current_occupancy = self._buffer.occupancy()
         return self._buffer.read(length)
 
     def cleanup(self):

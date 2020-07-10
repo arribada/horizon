@@ -1,6 +1,7 @@
 from . import pyusb
 from . import message
 import math
+import struct
 from array import array
 try: # BLE is currently not supported on Windows
     from .ble import BluetoothTracker
@@ -54,6 +55,7 @@ class BackendBluetooth(_Backend):
             resp = self._ble.write(command.pack())
 
         resp = None
+        msg = None
 
         for _ in range(0, math.ceil(timeout / CONST_INTER_PACKET_TIMEOUT)):
             packet = self._ble.read(CONST_INTER_PACKET_TIMEOUT)
@@ -62,14 +64,20 @@ class BackendBluetooth(_Backend):
                     resp = packet
                 else:
                     resp = resp + packet
+
+                # Try to decode what we have so far, if it fails then continue to receive data
+                try:
+                    (msg, _) = message.decode(array('B',resp))
+                    if msg != None:
+                        break
+                except (struct.error):
+                    pass # Ignore struct decoding errors which would occur if we have not yet received enough data
             elif resp is not None:
                 break
 
-        if resp == None:
-            return resp
-        
+        if msg == None:
+            return None
         else:
-            (msg, _) = message.decode(array('B',resp))
             return msg
 
     def write(self, data, timeout=None):

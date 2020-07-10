@@ -129,7 +129,7 @@ class Device(object):
         self._log_download_success = args.log_skip_download
         self._log_erase_flag = args.log_erase
         self._log_create_flag = args.log_create
-        self._get_status_flag = True
+        self._get_status_flag = False
         self._config_flag = config_data
         self._fw_main_flag = fw_main_data
         self._fw_ble_flag = fw_ble_data
