@@ -18,7 +18,7 @@ setup(
     license='GNU General Public License v3 or later (GPLv3+)',
     author='Liam Wickins',
     author_email='liam@icoteq.com',
-    description='Python tools for provisioning Arribada tracker devices',
+    description='Python tools for provisioning Arribada tracker devices 2.0.0',
     long_description=open('README.rst').read(),
     packages=find_packages(exclude=['tests', 'tests.*']),
     zip_safe=False,
