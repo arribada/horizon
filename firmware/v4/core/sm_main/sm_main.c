@@ -231,6 +231,8 @@ typedef enum
 
 #define GPS_RESTART_TIME_MS (10) // How long to hold the power line low on the GPS device if it is unresponsive
 
+#define SALTWATER_SWITCH_MINIMUM_PERIOD_S (4)
+
 #define KICK_WATCHDOG()   syshal_rtc_soft_watchdog_refresh()
 
 #define BUTTON_SATELLITE_TEST_MS  (5000)
@@ -1008,8 +1010,6 @@ void saltwater_switch_callback(const syshal_switch_state_t *state)
     // If we're in the operational state and we were previously underwater
     if (!tracker_above_water)
     {
-        syshal_timer_set(timer_saltwater_switch_hysteresis, one_shot, sys_config.saltwater_switch_hysteresis_period.contents.seconds);
-
         if (sys_config.saltwater_switch_log_enable.contents.enable &&
             sys_config.saltwater_switch_log_enable.hdr.set)
         {
@@ -1018,7 +1018,10 @@ void saltwater_switch_callback(const syshal_switch_state_t *state)
             logging_add_to_buffer((uint8_t *) &surfaced, sizeof(surfaced));
         }
 
-        syshal_timer_set(timer_saltwater_switch_hysteresis, one_shot, sys_config.saltwater_switch_hysteresis_period.contents.seconds);
+        if (sys_config.saltwater_switch_hysteresis_period.contents.seconds < SALTWATER_SWITCH_MINIMUM_PERIOD_S)
+            syshal_timer_set(timer_saltwater_switch_hysteresis, one_shot, SALTWATER_SWITCH_MINIMUM_PERIOD_S);
+        else
+            syshal_timer_set(timer_saltwater_switch_hysteresis, one_shot, sys_config.saltwater_switch_hysteresis_period.contents.seconds);
 
         gps_scheduler_trigger(GPS_SCHEDULER_TRIGGER_SALTWATER_SWITCH, true);
     }
