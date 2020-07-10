@@ -429,7 +429,10 @@ static void syshal_gps_process_nav_pvt_priv(const UBX_Packet_t * packet)
     event.pvt.hAcc = packet->UBX_NAV_PVT.hAcc;
     event.pvt.vAcc = packet->UBX_NAV_PVT.vAcc;
 
-    event.pvt.date_time_valid = packet->UBX_NAV_PVT.valid & (UBX_NAV_PVT_VALID_FLAGS_DATE | UBX_NAV_PVT_VALID_FLAGS_TIME);
+    if ((packet->UBX_NAV_PVT.valid & UBX_NAV_PVT_VALID_FLAGS_DATE) && (packet->UBX_NAV_PVT.valid & UBX_NAV_PVT_VALID_FLAGS_TIME))
+        event.pvt.date_time_valid = true;
+    else
+        event.pvt.date_time_valid = false;
 
     if (event.pvt.date_time_valid)
     {
