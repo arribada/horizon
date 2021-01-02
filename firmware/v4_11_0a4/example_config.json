@@ -1,0 +1,52 @@
+{
+    "gps": {
+        "logDebugEnable": true,
+        "logPositionEnable": true,
+        "logTTFFEnable": true,
+        "maxFixes": 5,
+        "maximumAquisitionTime": 500,
+        "mode": [
+            "SCHEDULED"
+        ],
+        "scheduledAquisitionInterval": 1800,
+        "testFixHoldTime": 120
+    },
+    "iot": {
+        "enable": true,
+        "logEnable": true,
+        "minBatteryThreshold": 0,
+        "satellite": {
+            "artic": {
+                "argosProtocol": 3,
+                "bulletin": [],
+                "deviceAddress": "00:00:00:00",
+                "minElevation": 10,
+                "warmupTime": 3
+            },
+            "connectionPriority": 0,
+            "enable": true,
+            "maxInterval": 0,
+            "minInterval": 0,
+            "minUpdates": 5,
+            "randomizedTxWindow": 5,
+            "retransmissionCount": 2,
+            "retransmissionInterval": 45,
+            "statusFilter": [
+                "LAST_GPS_LOCATION",
+                "BATTERY_VOLTAGE"
+            ],
+            "testModeEnable": false
+        }
+    },
+    "logging": {
+        "dateTimeStampEnable": true,
+        "enable": true,
+    },
+    "rtc": {
+        "syncToGPSEnable": true
+    },
+    "system": {
+        "deviceName": "horizon"
+    },
+    "version": 1
+}
