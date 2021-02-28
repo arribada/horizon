@@ -1,0 +1,108 @@
+Altium Designer Pick and Place Locations
+
+========================================================================================================================
+File Design Information:
+
+Date:       27/04/20
+Time:       13:30
+Revision:   Not in VersionControl
+Variant:    Arribada TT4
+Units used: mm
+
+Designator Comment                        Layer       Footprint                 Center-X(mm) Center-Y(mm) Rotation Description                                                     Pad-X(mm) Pad-Y(mm) 
+ANT1       2JCP2540101Ga                  BottomLayer 2JCP2540101GA             15.6500      17.5250      270      "GNSS ANTENNA CERAMIC PATCH GPS/GALILEO/GLONASS/BEIDOU"         15.6500   17.5250   
+C1         "10UF 0402 6.3V 20% X5R"       TopLayer    CAP0402N                  44.7090      27.7000      180      "CAP CER 10UF 0402 6.3V 20% X5R"                                45.1590   27.7000   
+C2         "470NF 0402 6.3V +50%/-20%"    TopLayer    YFF15PC                   47.4750      6.3000       270      "CAP FEEDTHRU 470NF 0402 6.3V +50%/-20%"                        47.4750   6.8000    
+C3         "10UF 0402 6.3V 20% X5R"       TopLayer    CAP0402N                  44.7090      29.7000      180      "CAP CER 10UF 0402 6.3V 20% X5R"                                45.1590   29.7000   
+C4         "10UF 0402 6.3V 20% X5R"       TopLayer    CAP0402N                  44.7090      28.7000      180      "CAP CER 10UF 0402 6.3V 20% X5R"                                45.1590   28.7000   
+C5         "1UF 0201 10V 20% X5R"         TopLayer    CAP0201L                  31.9000      3.4750       90       "CAP CER 1UF 0201 10V 20% X5R"                                  31.9000   3.1950    
+C6         "470NF 0402 6.3V +50%/-20%"    TopLayer    YFF15PC                   30.5500      4.2500       360      "CAP FEEDTHRU 470NF 0402 6.3V +50%/-20%"                        30.0500   4.2500    
+C7         "CAP CER 10PF 0201 25V 5% C0G" TopLayer    Passive0201L              43.3750      26.9500      90       "CAP CER 10PF 0201 25V 5% C0G"                                  43.3750   26.6700   
+C8         "CAP NF 0402"                  TopLayer    CAP0402N_NF               42.2900      29.7000      0        "CAP NF 0402"                                                   41.8400   29.7000   
+C9         "10NF 0402 16V 20% X7R"        TopLayer    CAP0402N                  21.9750      22.2303      360      "CAP CER 10NF 0402 16V 20% X7R"                                 21.5250   22.2303   
+C10        "470NF 0402 6.3V +50%/-20%"    TopLayer    YFF15PC                   28.1250      20.7500      360      "CAP FEEDTHRU 470NF 0402 6.3V +50%/-20%"                        27.6250   20.7500   
+C11        "1NF 0402 50V 5%"              TopLayer    CAP0402N                  43.1250      11.2250      270      "CAP CER 1NF 0402 50V 5% C0G"                                   43.1250   11.6750   
+C12        "470NF 0402 6.3V +50%/-20%"    TopLayer    YFF15PC                   22.9250      17.1250      180      "CAP FEEDTHRU 470NF 0402 6.3V +50%/-20%"                        23.4250   17.1250   
+C14        "470NF 0402 6.3V +50%/-20%"    BottomLayer YFF15PC                   32.7500      14.5500      360      "CAP FEEDTHRU 470NF 0402 6.3V +50%/-20%"                        32.2500   14.5500   
+C19        "100NF 0201 35V 10% X5R"       TopLayer    CAP0201L                  49.6750      12.0000      270      "CAP CER 100NF 0201 35V 10% X5R"                                49.6750   12.2800   
+C22        "4.7UF 0402 10V 20% X5R"       BottomLayer CAP0402N                  46.9000      27.2500      270      "CAP CER 4.7UF 0402 10V 20% X5R"                                46.9000   27.7000   
+C24        "10UF 0603 16V 10% X5R"        TopLayer    CAP0603N                  42.3250      24.6000      360      "CAP CER 10UF 0603 16V 10% X5R"                                 41.5250   24.6000   
+C30        "4.7UF 0402 10V 20% X5R"       TopLayer    CAP0402N                  49.7250      18.5500      180      "CAP CER 4.7UF 0402 10V 20% X5R"                                50.1750   18.5500   
+C31        "1UF 0201 10V 20% X5R"         TopLayer    CAP0201L                  49.6550      17.1500      180      "CAP CER 1UF 0201 10V 20% X5R"                                  49.9350   17.1500   
+C32        "100NF 0201 35V 10% X5R"       TopLayer    CAP0201L                  49.6500      17.7500      180      "CAP CER 100NF 0201 35V 10% X5R"                                49.9300   17.7500   
+C33        "470NF 0201 16V 20% X5R"       BottomLayer CAP0201L                  41.2250      24.4250      90       "CAP CER 470NF 0201 16V 20% X5R"                                41.2250   24.1450   
+C34        "1UF 0201 10V 20% X5R"         BottomLayer CAP0201L                  41.8250      24.4250      90       "CAP CER 1UF 0201 10V 20% X5R"                                  41.8250   24.1450   
+C35        "100NF 0201 35V 10% X5R"       TopLayer    CAP0201L                  37.3750      32.1250      270      "CAP CER 100NF 0201 35V 10% X5R"                                37.3750   32.4050   
+C36        "100NF 0201 35V 10% X5R"       TopLayer    CAP0201L                  34.2500      30.4750      360      "CAP CER 100NF 0201 35V 10% X5R"                                33.9700   30.4750   
+C43        "1UF 0201 10V 20% X5R"         TopLayer    CAP0201L                  43.7250      17.9750      360      "CAP CER 1UF 0201 10V 20% X5R"                                  43.4450   17.9750   
+C45        "100NF 0201 35V 10% X5R"       TopLayer    CAP0201L                  42.7500      9.3250       270      "CAP CER 100NF 0201 35V 10% X5R"                                42.7500   9.6050    
+D1         APHF1608LSEEQBDZGKC            BottomLayer LED_RGB_0603              34.5750      6.8750       270      "LED RGB 0603 2MA"                                              34.2250   7.5250    
+D2         ESD9L5.0ST5G                   TopLayer    SOD-923                   43.3000      30.7500      360      "DIO TVS 5.4V 1A SOD-923"                                       42.8500   30.7500   
+D3         RCLAMP0504FBTCT                TopLayer    SC70-6                    52.2250      15.0250      90       "DIO ARRAY ESD"                                                 53.1500   14.3750   
+D5         LTST-C190KSKT                  BottomLayer DIOD0603N_YELLOW          40.3410      20.5500      360      "LED YELLOW 0603 20MA VF=2V"                                    39.5910   20.5500   
+D6         LTST-C190KGKT                  BottomLayer DIOD0603N_GREEN           40.3410      22.1500      360      "LED GREEN 0603 20MA VF=2V"                                     39.5910   22.1500   
+FID2       Fiducial                       BottomLayer FIDUCIAL                  1.3750       28.3500      90       Fiducial                                                        1.3750    28.3500   
+FID3       Fiducial                       BottomLayer FIDUCIAL                  1.6750       7.3500       90       Fiducial                                                        1.6750    7.3500    
+FID4       Fiducial                       BottomLayer FIDUCIAL                  49.2750      5.5750       90       Fiducial                                                        49.2750   5.5750    
+FID5       Fiducial                       TopLayer    FIDUCIAL                  1.3500       28.3500      90       Fiducial                                                        1.3500    28.3500   
+FID6       Fiducial                       TopLayer    FIDUCIAL                  49.4750      33.7750      90       Fiducial                                                        49.4750   33.7750   
+FID7       Fiducial                       BottomLayer FIDUCIAL                  49.4750      33.7750      90       Fiducial                                                        49.4750   33.7750   
+FID8       Fiducial                       TopLayer    FIDUCIAL                  49.2750      5.5750       90       Fiducial                                                        49.2750   5.5750    
+FID10      Fiducial                       TopLayer    FIDUCIAL                  45.5000      10.2500      90       Fiducial                                                        45.5000   10.2500   
+FID11      Fiducial                       TopLayer    FIDUCIAL                  38.1500      9.8750       90       Fiducial                                                        38.1500   9.8750    
+J1         S2B-PH-SM4-TB                  BottomLayer SM4-2                     51.1500      24.5500      90       "CON HDR 2POS 2.0MM PITCH"                                      48.2750   25.5500   
+J2         47589-0001                     BottomLayer 0475890001                52.4750      15.0250      90       "CON MICRO USB 2.0 TYPE AB R/A SMD"                             51.3000   16.3250   
+J3         TC2030-NL                      TopLayer    TC2030NL                  47.5250      11.2650      90       "CON PLUG OF NAILS 6 PIN FOOTPRINT NO LEGS"                     48.1600   9.9950    
+J4         M20-9990245                    BottomLayer HDR_2POS_2.54MM_THRU_HOLE 35.1300      22.9000      180      "CON HDR 2POS HEADER 2.54MM VERT THRU HOLE"                     36.4000   22.9000   
+J5         0532611071                     TopLayer    0532611071                3.8500       17.9250      270      "CON PICOBLADE 10POS HEADER 1.25MM HORIZ SMD"                   5.3750    23.5500   
+J7         0532611471                     TopLayer    0532611471                19.1500      31.1500      180      "CON PICOBLADE 14POS HEADER 1.25MM HORIZ SMD"                   27.2750   29.6250   
+J8         0533980271                     BottomLayer 0533980271                44.4000      31.8250      360      "CON PICOBLADE 2POS HEADER 1.25MM VERT SMD"                     43.7750   30.4500   
+L1         LPS3015-152MRC                 TopLayer    LPS3015_UPDATE            47.4840      25.9250      90       "IND PWR 1.5UH 20% 1.7A 2.95MM x 2.95MM x 1.4MM"                47.5090   24.5500   
+MH1        "Mounting Hole M2 Plated"      TopLayer    MOUNTING_HOLE_M2_PLATED   3.1500       31.8500      0        "Mounting Hole M2 Plated"                                       3.1500    31.8500   
+MH2        "Mounting Hole M2 Plated"      TopLayer    MOUNTING_HOLE_M2_PLATED   3.1500       3.1500       0        "Mounting Hole M2 Plated"                                       3.1500    3.1500    
+MH3        "Mounting Hole M2 Plated"      TopLayer    MOUNTING_HOLE_M2_PLATED   52.8500      31.8500      0        "Mounting Hole M2 Plated"                                       52.8500   31.8500   
+MH4        "Mounting Hole M2 Plated"      TopLayer    MOUNTING_HOLE_M2_PLATED   52.8750      7.2250       0        "Mounting Hole M2 Plated"                                       52.8750   7.2250    
+MH5        "Mounting Hole 0.5mm"          TopLayer    Mounting_Hole_0.5mm       32.3750      8.9250       90       "Mounting Hole 0.5mm"                                           32.3750   8.9250    
+MH6        "Mounting Hole 0.5mm"          TopLayer    Mounting_Hole_0.5mm       32.3750      6.8250       90       "Mounting Hole 0.5mm"                                           32.3750   6.8250    
+R1         "0R 0201"                      BottomLayer RES0201N                  43.7250      4.7003       360      "RES 0R 0201"                                                   43.3950   4.7003    
+R2         "4.7K 0201 1% 100PPM"          TopLayer    RES0201L                  37.7750      27.6100      360      "RES 4.7K 0201 1% 100PPM"                                       37.4950   27.6100   
+R3         "750R 0201 1% 100PPM"          BottomLayer RES0201L                  35.8750      7.5250       180      "RES 750R 0201 1% 100PPM"                                       36.1550   7.5250    
+R4         "330R 0201 1% 100PPM"          BottomLayer RES0201L                  35.8750      6.2250       180      "RES 330R 0201 1% 100PPM"                                       36.1550   6.2250    
+R5         "1.6K 0201 1% 100PPM"          BottomLayer RES0201L                  34.5000      5.4250       180      "RES 1.6K 0201 1% 100PPM"                                       34.7800   5.4250    
+R6         "4.7K 0201 1% 100PPM"          TopLayer    RES0201L                  36.4750      27.6250      180      "RES 4.7K 0201 1% 100PPM"                                       36.7550   27.6250   
+R7         "0R 0402"                      TopLayer    RES0402N                  47.4250      20.7500      90       "RES 0R 0402"                                                   47.4250   20.3000   
+R8         "0R 0402"                      TopLayer    RES0402N                  42.0000      20.7500      90       "RES 0R 0402"                                                   42.0000   20.3000   
+R9         "RES NF 0402"                  TopLayer    RES0402N                  45.1500      23.0750      360      "RES NF 0402"                                                   44.7000   23.0750   
+R10        "10K 0201 1% 100PPM"           TopLayer    RES0201L                  49.6750      10.9750      270      "RES 10K 0201 1% 100PPM"                                        49.6750   11.2550   
+R11        "3.3K 0201 1% 100PPM"          TopLayer    RES0201L                  45.7750      18.0500      180      "RES 3.3K 0201 1% 100PPM"                                       46.0550   18.0500   
+R12        "287K 0201 1% 100PPM"          TopLayer    RES0201N                  42.5590      26.8750      90       "RES 287K 0201 1% 100PPM"                                       42.5590   26.5450   
+R13        "51.1K 0201 1% 100PPM"         TopLayer    RES0201N                  41.8090      26.8750      270      "RES 51.1K 0201 1% 100PPM"                                      41.8090   27.2050   
+R14        "100K 0201 1% 100PPM"          BottomLayer RES0201N                  49.4500      17.7250      270      "RES 100K 0201 1% 100PPM"                                       49.4500   18.0550   
+R15        "0R 0402"                      BottomLayer RES0402N                  43.8000      24.7000      360      "RES 0R 0402"                                                   43.3500   24.7000   
+R16        "10K 0402 1%"                  TopLayer    RES0402N                  23.8250      18.7803      90       "RES 10K 0402 1% 100PPM"                                        23.8250   18.3303   
+R17        "10K 0402 1%"                  TopLayer    RES0402N                  23.8250      20.6803      90       "RES 10K 0402 1% 100PPM"                                        23.8250   20.2303   
+R18        "10K 0201 1% 100PPM"           TopLayer    RES0201L                  47.2750      19.0250      90       "RES 10K 0201 1% 100PPM"                                        47.2750   18.7450   
+R19        "1M 0402 1%"                   TopLayer    RES0402N                  21.0500      17.1553      360      "RES 1M 0402 1% 100PPM"                                         20.6000   17.1553   
+R20        "280K 0402 1% 100PPM"          TopLayer    RES0402N                  19.4750      17.6053      270      "RES 280K 0402 1% 100PPM"                                       19.4750   18.0553   
+R21        "100K 0402 1%"                 TopLayer    RES0402N                  19.2750      20.5803      90       "RES 100K 0402 1% 100PPM"                                       19.2750   20.1303   
+R22        "1M 0402 1%"                   TopLayer    RES0402N                  26.2500      20.7250      360      "RES 1M 0402 1% 100PPM"                                         25.8000   20.7250   
+R23        "10K 0201 1% 100PPM"           BottomLayer RES0201L                  39.8250      26.3750      180      "RES 10K 0201 1% 100PPM"                                        40.1050   26.3750   
+R24        "10K 0201 1% 100PPM"           BottomLayer RES0201L                  41.5500      27.1000      180      "RES 10K 0201 1% 100PPM"                                        41.8300   27.1000   
+R25        "330R 0201 1% 100PPM"          TopLayer    RES0201N                  41.9102      11.1000      270      "RES 330R 0201 1% 100PPM"                                       41.9102   11.4300   
+R26        "620R 0201 1% 200PPM"          BottomLayer RES0201L                  42.1250      20.6000      270      "RES 620R 0201 1% 200PPM"                                       42.1250   20.8800   
+R27        "330R 0201 1% 100PPM"          BottomLayer RES0201L                  42.4000      22.1500      180      "RES 330R 0201 1% 100PPM"                                       42.6800   22.1500   
+R35        "10K 0201 1% 100PPM"           TopLayer    RES0201L                  48.6250      32.0000      270      "RES 10K 0201 1% 100PPM"                                        48.6250   32.2800   
+R46        "680K 0402 1%"                 BottomLayer RES0402N                  38.8500      18.1000      90       "RES 680K 0402 1% 100PPM"                                       38.8500   17.6500   
+R47        "1M 0402 1%"                   BottomLayer RES0402N                  38.5500      16.6250      360      "RES 1M 0402 1% 100PPM"                                         38.1000   16.6250   
+SW1        PTS820J2x                      BottomLayer TL1015                    44.7750      16.8250      360      "SW SPST PB 50MA 12V SMT CK variant"                            42.7000   16.8250   
+SW2        PTS820J2x                      BottomLayer TL1015                    34.9750      18.1000      360      "SW SPST PB 50MA 12V SMT CK variant"                            32.9000   18.1000   
+SW3        "SW REED SPST"                 TopLayer    CT05                      43.9820      33.6270      360      "SW REED SPST SMD"                                              40.8170   33.6270   
+U1         ISP1807-LR                     TopLayer    ISP1807-LR                42.1000      4.5000       360      "IC ISP Smart Bluetooth Module"                                 38.6000   8.0003    
+U2         NEO-M8N                        TopLayer    NEO                       21.5250      8.6750       270      "IC GNSS NEO-M8N"                                               28.5250   14.5170   
+U3         IS25LP128F-JKLE                BottomLayer SON127P600X80_HS-9N       37.1000      12.6250      180      "IC MEM SERIAL NOR FLASH QSPI 128Mb/16MB 3.6V 166MHz WSON8 6X5" 39.9400   14.5300   
+U4         BQ24230RGT                     TopLayer    VQFN-16                   45.0625      20.1820      180      "IC BATT CHG LI ION 4.2V (IP 4.3 - 6.5V) 500MA"                 46.1500   19.4320   
+U5         TPS63036YFGR                   TopLayer    BGA8C40P2X4_108X181X62    44.5090      25.9500      180      "IC VREG BUCK BOOST 500mA IP 1.8V-5.5V ADJ"                     44.7090   25.3500   
+U6         LTC6995IS6                     TopLayer    SOT-23_DBV                21.5304      19.6950      270      "IC PULSE GENERATOR SOT23-6"                                    22.4804   21.0450   
+U7         74HC132BQ-Q100X                TopLayer    DHVQFN14                  27.3589      18.2053      360      "IC LOGIC NAND 2-INPUT QUAD 14-DHVQFN"                          27.1089   19.6553   
+U8         BQ27621YZFR-G1A                BottomLayer DSBGA-9                   41.2750      25.8750      270      "IC BATT MGMT 2.45V - 4.5V DSBGA-9"                             40.7750   26.3750   
+U9         BMX160                         TopLayer    LGA14                     37.0313      29.5688      180      "IC IMU Accel/Gyro/magnet/temp SPI/I2C 12LGA"                   38.1375   28.9750   
