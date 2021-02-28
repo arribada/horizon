@@ -7,13 +7,13 @@ The platform was developed by the [Arribada Initiative](http://arribada.org) and
 There are currently two hardware releases;
 
 - **Arribada Horizon v2.0** (STM32 based)
-- **Arribada Horizon v4.0** (nRF52840 based)
+- **Arribada Horizon v4.1** (nRF52840 based)
 
 ### Arribada Horizon Firmware ###
 
 [/firmware](https://github.com/arribada/horizon/tree/master/firmware)
 
-This repository contains the latest Horizon firmware and Python tools. To configure and interact with tags using this firmware, install the latest compatible tools version:
+This repository contains the latest Horizon firmware and Python tools. To configure and interact with tags using this firmware, install the latest compatible tools version. Visit https://arribada.org/horizon for guidance and installation instructions.
 
 v10.0rc1 Firmware Release requires [Tools v2.0.0](https://github.com/arribada/horizon/tree/master/tools/arribada_tools) or higher.
 
