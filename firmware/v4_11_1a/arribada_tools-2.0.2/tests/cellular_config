@@ -1,0 +1,77 @@
+#!/usr/bin/python3
+
+import argparse
+import traceback
+import logging
+import sys
+from arribada_tools import cellular, backend, interface
+from OpenSSL import crypto
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--serial', required=False)
+parser.add_argument('--baud', default=115200, type=int, required=False)
+parser.add_argument('--ble_addr', dest='bluetooth_addr', required=False)
+parser.add_argument('--root_ca', type=argparse.FileType('r'), required=True)
+parser.add_argument('--cert', type=argparse.FileType('r'), required=True)
+parser.add_argument('--key', type=argparse.FileType('r'), required=True)
+parser.add_argument('--debug', action='store_true', required=False)
+parser.add_argument('--verify', action='store_true', required=False)
+args = parser.parse_args()
+
+if not any(vars(args).values()):
+    parser.print_help()
+    sys.exit(2)
+
+try:
+    if args.debug:
+        logging.basicConfig(format='%(asctime)s\t%(module)s\t%(levelname)s\t%(message)s', level=logging.DEBUG)
+    else:
+        logging.basicConfig(format='%(asctime)s\t%(module)s\t%(levelname)s\t%(message)s', level=logging.INFO)
+    
+    bridged_backend = None
+    cellular_backend = None
+    
+    if args.serial:
+        cellular_backend = cellular.CellularSerialBackend(args.serial, baudrate=args.baud)
+    else:
+        if args.bluetooth_addr:
+            bridged_backend = backend.BackendBluetooth(dev_addr=args.bluetooth_addr)
+        else:
+            bridged_backend = backend.BackendUsb()
+        cellular_backend = cellular.CellularBridgedBackend(bridged_backend)
+        interface.ConfigInterface(bridged_backend).cellular_config(True)
+    
+    cfg = cellular.CellularConfig(cellular_backend)
+    
+    root_ca = crypto.load_certificate(crypto.FILETYPE_PEM, args.root_ca.read())
+    dev_cert = crypto.load_certificate(crypto.FILETYPE_PEM, args.cert.read())
+    dev_key = crypto.load_privatekey(crypto.FILETYPE_PEM, args.key.read())
+    
+    if args.verify:
+        # Do not modify files on the board, just verify they have the same md5sum
+        cfg.verify_all(root_ca=crypto.dump_certificate(crypto.FILETYPE_ASN1, root_ca),
+                       cert=crypto.dump_certificate(crypto.FILETYPE_ASN1, dev_cert),
+                       key=crypto.dump_privatekey(crypto.FILETYPE_ASN1, dev_key))
+    else:
+        cfg.delete_all()
+        cfg.create_all(root_ca=crypto.dump_certificate(crypto.FILETYPE_ASN1, root_ca),
+                       cert=crypto.dump_certificate(crypto.FILETYPE_ASN1, dev_cert),
+                       key=crypto.dump_privatekey(crypto.FILETYPE_ASN1, dev_key))
+        cfg.disable_auto_attach()
+    
+    if bridged_backend:
+        interface.ConfigInterface(bridged_backend).cellular_config(False)
+    
+except:
+    if args.debug:
+        traceback.print_exc()
+    else:
+        print("Unexpected error: %s" % str(sys.exc_info()))
+    sys.exit(1)
+finally:
+    if cellular_backend:
+        cellular_backend.cleanup()
+    
+    if bridged_backend:
+        bridged_backend.cleanup()
