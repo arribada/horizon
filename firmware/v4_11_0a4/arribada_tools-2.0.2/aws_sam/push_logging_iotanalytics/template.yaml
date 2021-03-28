@@ -1,0 +1,33 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Resources:
+  ArribadaPushLoggingIoTAnalyticsFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Timeout: 10
+      Policies:
+        - AWSLambdaExecute
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - logs:CreateLogGroup
+              Resource: "*"
+            - Effect: Allow
+              Action:
+                - logs:CreateLogStream
+                - logs:PutLogEvents
+              Resource: "*"
+            - Effect: Allow
+              Action:
+                - iotanalytics:BatchPutMessage
+              Resource: "*"
+
+      Handler: app.lambda_handler
+      Runtime: python3.7
+      CodeUri: push_logging_iotanalytics/
+    Events:
+      IoTLoggingMessage:
+        Type: IOTRule
+        Properties:
+          Sql: "SELECT encode(*, 'base64') AS data, timestamp() AS ts, topic(1) as thing_name FROM '+/logging'"

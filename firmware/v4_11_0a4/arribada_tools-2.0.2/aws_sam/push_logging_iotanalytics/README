@@ -1,0 +1,8 @@
+Testing
+=======
+
+The file event.json contains a test event for triggering the lambda
+function.
+
+sam build
+sam local invoke --event event.json

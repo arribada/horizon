@@ -1,0 +1,48 @@
+#!/usr/bin/python3
+
+import argparse
+import traceback
+import logging
+import json
+import sys
+from arribada_tools import log
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--debug', action='store_true', required=False)
+parser.add_argument('--file', type=argparse.FileType('rb'), required=True)
+parser.add_argument('--format', required=False)
+args = parser.parse_args()
+
+if not any(vars(args).values()):
+    parser.print_help()
+    sys.exit(2)
+
+try:
+
+    if args.debug:
+        logging.basicConfig(format='%(asctime)s\t%(module)s\t%(levelname)s\t%(message)s', level=logging.DEBUG)
+    else:
+        logging.basicConfig(format='%(asctime)s\t%(module)s\t%(levelname)s\t%(message)s', level=logging.WARN)
+    
+    data = args.file.read()
+    objects = log.decode_all(data)
+
+    del data # Mark the the now unused data as deletable
+    
+    for i in objects:
+        if i.name == 'LogStart' or i.name == 'LogEnd':
+            pass
+        else:
+            d = {}
+            d[i.name] = {}
+            if hasattr(i, 'fields'):
+                for j in i.fields:
+                    d[i.name][j] = getattr(i, j)
+            print(json.dumps(d))
+
+except:
+    if args.debug:
+        traceback.print_exc()
+    else:
+        sys.stderr.write("Unexpected error: %s\n" % str(sys.exc_info()))
+    sys.exit(1)

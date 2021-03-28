@@ -1,0 +1,64 @@
+#!/usr/bin/python3
+
+import argparse
+import traceback
+import logging
+import json
+import sys
+import csv
+from collections import OrderedDict
+from datetime import datetime, timedelta
+from arribada_tools import argos
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--debug', action='store_true', required=False)
+parser.add_argument('--file', type=argparse.FileType('r'), required=True)
+parser.add_argument('--filtered', action='store_true')
+args = parser.parse_args()
+
+if not any(vars(args).values()):
+    parser.print_help()
+    sys.exit(2)
+
+try:
+
+    if args.debug:
+        logging.basicConfig(format='%(asctime)s\t%(module)s\t%(levelname)s\t%(message)s', level=logging.DEBUG)
+    else:
+        logging.basicConfig(format='%(asctime)s\t%(module)s\t%(levelname)s\t%(message)s', level=logging.WARN)
+    
+    with args.file as csvfile:
+        reader = csv.DictReader(csvfile, delimiter=';')
+        for row in reader:
+            d = OrderedDict()
+            datetime_obj = datetime.strptime(row['Msg Date'], '%m-%d-%Y %H:%M:%S')
+            d['time'] = str(datetime_obj)
+            d['name'] = row['Platform']
+            d['level'] = row['Best level'] + ' dB'
+
+            payload = argos.decode(bytearray.fromhex(row['Raw data']))
+
+            d['data'] = {}
+            try:
+                for i in payload:
+                    d['data'][i.name] = {}
+                    if hasattr(i, 'fields'):
+                        for j in i.fields:
+                            d['data'][i.name][j] = getattr(i, j)
+            except:
+                d['data'] = "unknown"
+
+            if args.filtered:
+                if d['data'] != "unknown":
+                    gps_time = datetime.utcfromtimestamp(int(d['data']['LastGPSLocation']['timestamp']))
+                    if gps_time < datetime_obj and datetime_obj - gps_time < timedelta(weeks=4): # Discard GPS times that make no sense
+                        print(json.dumps(d))
+            else:
+                print(json.dumps(d))
+
+except:
+    if args.debug:
+        traceback.print_exc()
+    else:
+        sys.stderr.write("Unexpected error: %s\n" % str(sys.exc_info()))
+    sys.exit(1)

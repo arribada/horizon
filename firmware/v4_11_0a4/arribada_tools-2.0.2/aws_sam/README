@@ -1,0 +1,25 @@
+README
+======
+
+You must install the aws sam tool to build and deploy the packages in this folder.
+Refer to the individual README files for each package.
+
+push_logging_dynamodb
+=====================
+
+Push logging data byte stream to dynamodb database.
+
+push_shadow_dynamodb
+=====================
+
+Push device shadow JSON update to dynamodb database.
+
+push_logging_iotanalytics
+=========================
+
+Push logging data byte stream to IoT Analytics channel.
+
+push_shadow_iotanalytics
+========================
+
+Push device shadow JSON update to IoT Analytics channel.
