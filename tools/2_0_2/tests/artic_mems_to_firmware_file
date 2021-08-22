@@ -1,0 +1,70 @@
+#!/usr/bin/python3
+import argparse
+import binascii
+import struct
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--path', type=str, required=True)
+parser.add_argument('--output', type=argparse.FileType('wb'), required=True)
+
+
+args = parser.parse_args()
+
+
+def extract_crc_values(path):
+	xmem_crc = 0
+	ymem_crc = 0
+	pmem_crc = 0
+	with open(path, 'r') as f:
+		for i in f:
+			t = i.strip().split(':')
+			if 'P memory' in t[0]:
+				pmem_crc = int(t[1], 16)
+			elif 'X memory' in t[0]:
+				xmem_crc = int(t[1], 16)
+			elif 'Y memory' in t[0]:
+				ymem_crc = int(t[1], 16)
+	return (xmem_crc, ymem_crc, pmem_crc)
+
+
+def process_mem_file(path):
+	byte_array = b''
+	with open(path, 'r') as f:
+		for i in f:
+			try:
+				(addr, data) = i.split()
+				addr = binascii.unhexlify(addr[1:])[::-1]
+				data = binascii.unhexlify(data)[::-1]
+				byte_array += addr
+				byte_array += data
+			except:
+				continue
+	return byte_array
+
+
+(xmem_crc, ymem_crc, pmem_crc) = \
+	extract_crc_values(args.path + '/Release_README.txt')
+
+print(hex(xmem_crc))
+print(hex(ymem_crc))
+print(hex(pmem_crc))
+
+(xmem, ymem, pmem) = (
+	process_mem_file(args.path + '/ARTIC.XMEM'),
+	process_mem_file(args.path + '/ARTIC.YMEM'),
+	process_mem_file(args.path + '/ARTIC.PMEM')
+					)
+
+
+fw_file_data = b''
+fw_file_data += struct.pack('<I', len(xmem))
+fw_file_data += struct.pack('<I', xmem_crc)
+fw_file_data += struct.pack('<I', len(ymem))
+fw_file_data += struct.pack('<I', ymem_crc)
+fw_file_data += struct.pack('<I', len(pmem))
+fw_file_data += struct.pack('<I', pmem_crc)
+fw_file_data += xmem + ymem + pmem
+
+args.output.write(fw_file_data)
+args.output.close()
