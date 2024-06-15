@@ -35,15 +35,12 @@ The antenna is connected via an SMA to u.fl connector, with the bulkhead of the 
 
 ![bottle1](https://github.com/arribada/horizon/assets/6997400/56dadb6f-c695-408e-9458-28840e7ae710)
 
+---
 
+## Assembly Guide ##
 
+This guide assumes you have pre-configured your Horizon board and have programmed a configuration to support your deployment. If you have ordered pre-printed parts from Arribada and have the bottle assembly kit to hand you will be able to complete a full assembly after purchasing potting compound (not included in the assembly kit). Consult the BOM list for a full list of provide / supplementary parts. If you intend to print your own parts, [review the CAD repository](https://github.com/arribada/horizon/tree/master/enclosures/bottle) too.
 
+**Stage 1** | Select the top enclosure piece. Next, add two to three pea size amounts of synthetic silicone grease or o-ring lubricant to the o-ring and apply it evenly until covered. Position the o-ring in the o-ring cavity of the enclosure piece.
 
-
-
-## Purpose ##
-The oceanic manta ray active vacuum tag was developed to provide a non-invasive means of attaching biologging instruments to oceanic manta rays by means of utilising a vaccum cup and active suction to attach biologging payloads to the manta's skin. It is primarily intended for attachment in-water by scuba divers, although a pole-based attachment mechanism is under development. Typical use cases involve attaching GPS/GNSS positioning instruments, accelerometers and other biologging apparatus. 
-
-The tag has been designed to fit Arribada's open source [Horizon ARTIC R2 Argos satellite / GNSS transmitter](https://arribada.org/horizon-gps-tracking/) to provide satellite positioning for recovery when on the surface. Other payloads, such as accelerometers, of optional VHF pingers can be fitted to either side of the tag's cylindrical mounting holes. 
-
-The design files in this repository contain all of the components and necessary to build the physical tag. You are free to select your own electronics / payloads, or to use the Horizon transmitter which fits the tag natively.
+**Stage 2** |  
