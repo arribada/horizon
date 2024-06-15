@@ -1,6 +1,6 @@
 # Horizon / Argos 500ml plastic bottle enclosure assembly guide #
 ## Version 2.2 | June 2024
-![manta_tag](https://github.com/arribada/manta-ray-active-vacuum-tag/assets/6997400/136ec232-e82c-4b59-bbe8-06c49197a670)
+![arribada_bottle_tracked](https://github.com/arribada/horizon/assets/6997400/358a3fd7-2af0-4aef-a012-f12eff526f08)
 
 ## About ##
 This repository contains CNC millable and 3D printable files to prepare a 500ml plastic bottle enclosure suitable for tracking everyday 500ml plastic drinks bottles.
