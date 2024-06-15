@@ -55,9 +55,20 @@ This guide assumes you have pre-configured your Horizon board and have programme
 
 ## Installing the Horizon and Argos ARTIC R2 satellite transmitter boards ##
 
-**Stage 2** | Temporarily place the board assembly into the 3D printed insert and using hot glue, secure the 3D printed insert in place by attaching it to the SLS enclosure walls, ensuring that it is flush and running straight in alignment with the enclosure's walls. Note - you only need a small amount of glue to temporarily position the 3D insert, as a thin layer of epoxy will be added later on to permanently secure the board.
+**Stage 1** | Connect the battery JST cable to the Horizon board's JST connector. Leave the battery close to the enclosure so there is enough cable length to still move and manipulate the enclosure pieces.
 
- **Stage 3** | Using a magnet, hold it next to the reed switch until you see a white LED flashing, indicating that the board has booted. Observe the board as it continues the boot phase. You will see a green LED flash next, indicating that the board has changed to an operational state. When you see a light blue LED flashing the board is searching for a GPS signal. Move the enclosure with the board and battery still connected to an area where a GPS signal can be aquired, or hold the board outside with a clear line of sight to the sky until you see a green LED flash - this lets you know that a fix was successful. The board will not continue and will transmit an Argos satellite message every 60 seconds. You will see a purple LED on the Horizon board when transmitting. If all phases pass, you are ready to encapsulate the board assembly. Turn the board off by holding the magent next to the reed switch again until you see a fast flashing white LED.
+**Stage 2** | Connect the antenna u.fl connector to the Argos ARTIC R2 transmitter board.
+
+**Stage 3** | Using hot glue, secure the 3D printed insert in place by attaching it to the SLS enclosure walls. Ensure that it is flush and running straight in alignment with the enclosure's walls. Note - you only need a small amount of glue to temporarily position the 3D insert, as a thin layer of epoxy will be added later on to permanently secure the board.
+
+**Stage 4** | Use a small amount of hot glue to position the assembled electronics inside the 3D printed insert. Place a blob of glue on the u.fl connector. The simplest way is to to apply a line of glue to the base of the ARTIC R2 transmitter as indicated below. As hot glue cures quickly, only spend a few seconds positioning the board. The most important thing to check is that the top of the board is flush inside the enclosure and is not sticking out of the top as it will need to be fully encapsulated and remain inside the 3D printed insert.
+
+ **Stage 5** | Using a magnet, hold it next to the reed switch until you see a white LED flashing, indicating that the board has booted. Observe the board as it continues the boot phase. You will see a green LED flash next, indicating that the board has changed to an operational state. When you see a light blue LED flashing the board is searching for a GPS signal. Move the enclosure with the board and battery still connected to an area where a GPS signal can be aquired, or hold the board outside with a clear line of sight to the sky until you see a green LED flash - this lets you know that a fix was successful. The board will not continue and will transmit an Argos satellite message every 60 seconds. You will see a purple LED on the Horizon board when transmitting. If all phases pass, you are ready to encapsulate the board assembly.
+
+We **highly recommend** running your desired configuration at this stage before encapsulating to confirm that your
+
+
+ It you encounter any issues, investigate before encapsulating you can be sure that your configuration is correct.Turn the board off by holding the magent next to the reed switch again until you see a fast flashing white LED.
 
  **Stage 4** | Prepare 90ml of potting solution. We recommend using MG Chemicals 832-WC. After following the potting solution's preparation guidance, leave the potting solution to de-gas. Whilst de-gassing, use a small amount of hot glue to position the assembled boards inside the 3D printed insert. The simplest way is to to apply a line of glue to the based of the ARTIC R2 transmitter as indicated below. 
 
