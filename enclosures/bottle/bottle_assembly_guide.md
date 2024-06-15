@@ -7,7 +7,7 @@ This repository contains CNC millable and 3D printable files to prepare a 500ml 
 
 Selective Laser Sintering (SLS) 3D printable enclosure STEP files can be [downloaded from the enclosure repository](https://github.com/arribada/horizon/tree/master/enclosures/bottle). The SLS enclosure fits an Horizon ARTIC R2 board and satellite transmitter in the top cavity, connected to a lithium polymer / lithium-ion battery seated in the bottom cavity. The two halves are connected together with an o-ring preventing water ingress, with two foam cavities providing additional buoyancy. 3D printed inserts enable the components to be encapsulated with epoxy / potting solution to protect them from water ingress and saltwater when deployed in the open ocean.
 
-An alternative method to using SLS is to print using reclaimed or recycled nylon on a suitable 3D printer, with reclaimed nylon sourced from discarded or abandoned fishing nets suitable. Waterproofing is achieve through the use of potting solutions to protect internal electronics and batteries. We recommend exploring the use of reclaimed nylon as a sustainable alterative to SLS printing.
+An alternative method to using SLS is to print using reclaimed or recycled nylon on a suitable 3D printer, with reclaimed nylon sourced from discarded or abandoned fishing nets suitable. Waterproofing is achieve through the use of potting solutions to protect internal electronics and batteries. We recommend exploring the use of reclaimed nylon as a sustainable alternative to SLS printing.
 
 ## Licencing ##
 All hardware designs, files, assets and schematics in this repository are licenced under CERN OHL v1.2. Documentation is licenced under GPLv3.
