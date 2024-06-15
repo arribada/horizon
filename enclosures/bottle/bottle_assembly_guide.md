@@ -43,4 +43,6 @@ This guide assumes you have pre-configured your Horizon board and have programme
 
 **Stage 1** | Select the top enclosure piece. Next, add two to three pea size amounts of synthetic silicone grease or o-ring lubricant to the o-ring and apply it evenly until covered. Position the o-ring in the o-ring cavity of the enclosure piece.
 
-**Stage 2** |  
+**Stage 2** | Position and screw the ARTIC R2 satellite transmitter board into the Horizon board with the GNSS ceramic antenna pointing upwards. Use 8mm brass or stainless steel spacers and M2 x 4mm screws.
+
+**Stage 3** |
