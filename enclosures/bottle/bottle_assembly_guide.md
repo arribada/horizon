@@ -9,6 +9,8 @@ Selective Laser Sintering (SLS) 3D printable enclosure STEP files can be [downlo
 
 An alternative method to using SLS is to print using reclaimed or recycled nylon on a suitable 3D printer, with reclaimed nylon sourced from discarded or abandoned fishing nets suitable. Waterproofing is achieve through the use of potting solutions to protect internal electronics and batteries. We recommend exploring the use of reclaimed nylon as a sustainable alternative to SLS printing.
 
+**Note** - it will take 72 hours to prepare a bottle due to the curing time necessary when potting the antenna and electronics.
+
 ## Licencing ##
 All hardware designs, files, assets and schematics in this repository are licenced under CERN OHL v1.2. Documentation is licenced under GPLv3.
 
