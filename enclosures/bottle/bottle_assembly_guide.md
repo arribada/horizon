@@ -61,17 +61,45 @@ This guide assumes you have pre-configured your Horizon board and have programme
 
 **Stage 3** | Using hot glue, secure the 3D printed insert in place by attaching it to the SLS enclosure walls. Ensure that it is flush and running straight in alignment with the enclosure's walls. Note - you only need a small amount of glue to temporarily position the 3D insert, as a thin layer of epoxy will be added later on to permanently secure the board.
 
-**Stage 4** | Use a small amount of hot glue to position the assembled electronics inside the 3D printed insert. Place a blob of glue on the u.fl connector. The simplest way is to to apply a line of glue to the base of the ARTIC R2 transmitter as indicated below. As hot glue cures quickly, only spend a few seconds positioning the board. The most important thing to check is that the top of the board is flush inside the enclosure and is not sticking out of the top as it will need to be fully encapsulated and remain inside the 3D printed insert.
+**Stage 4** | Use a small amount of hot glue to position the assembled electronics inside the 3D printed insert. Place a blob of glue on the u.fl connector to ensure it doesn't come loose during assembly. Next, the simplest way to sure the full board assembly is to to apply a line of glue to the base of the ARTIC R2 transmitter as indicated below. As hot glue cures quickly, only spend a few seconds positioning the board. The most important thing to check is that the top of the board is flush inside the enclosure and is not sticking out of the top as it will need to be fully encapsulated and remain inside the 3D printed insert.
 
  **Stage 5** | Using a magnet, hold it next to the reed switch until you see a white LED flashing, indicating that the board has booted. Observe the board as it continues the boot phase. You will see a green LED flash next, indicating that the board has changed to an operational state. When you see a light blue LED flashing the board is searching for a GPS signal. Move the enclosure with the board and battery still connected to an area where a GPS signal can be aquired, or hold the board outside with a clear line of sight to the sky until you see a green LED flash - this lets you know that a fix was successful. The board will not continue and will transmit an Argos satellite message every 60 seconds. You will see a purple LED on the Horizon board when transmitting. If all phases pass, you are ready to encapsulate the board assembly.
 
-We **highly recommend** running your desired configuration at this stage before encapsulating to confirm that your
+We **highly recommend** running your desired configuration at this stage before encapsulating to confirm that your bottle's configuration is worked as expected. To do this, temporarily place the battery in the base of the bottom enclosure and use just 4 x M3 screws on the corners of the enclosure to seal the enclosure and position the antenna. 
+
+Place the bottle in a dry location (as it is not yet waterproof) where it can successfully transmit. You can also place is under a plastic container if outdoors for 24 hours, confirming that you are receiving satellite messages in the Argos dashboard. Once you are happy that your bottle's transmissions are nominal, continue with the encapsulation process.
+
+## Encapsulating the Horizon and Argos ARTIC R2 satellite transmitter boards and battery ##
+
+Note - ensure you have turned off the Horizon board before encapsulating by holding a magent next to the reed switch. Wait until you see a flash flashing white LED followed by a single red LED flash. This confirms that the board has been turned off.
+
+**Stage 1** | Just as we did in Stage 3 when preparing the Horizon and ARTIC R2 boards, hot glue the 3D insert for the battery into position inside the bottom enclosure's cavity. Ensure that the insert is positioned directly in the centre as to not affect the centre of gravity. It's important that the base of the bottle is heavier than the top and that the weight is centrered to ensure that the bottle can self-right and reorientate itself if capsized by waves. Position the JST cable so it can scape and connect to the other enclosure part with the Horizon board in without any cable strain.
+
+ **Stage 2** | Prepare 150ml of potting solution. We recommend using MG Chemicals 832-WC. After following the potting solution's preparation guidance, leave the potting solution to de-gas. This is typically 15 - 20 mins when preparing 832-WC, so in the meantime proceed with Stage 3.
+
+ **Stage 3** | Whilst you are waiting for the potting solution to de-gas, cut foam pieces and layer them to fill each of the side cavities in the bottom enclosure. Use hot glue to glue them together and then secure a single piece in each cavity to the left and right of the battery.
+
+ **Stage 4** | Place 3/4 of the enclosure on the end of table with the antenna pointing down and position the battery enclosure next to it. Pour the potting solution into the 3D printed insert containing the Horizon and ARTIC R2 boards / electronics. Ensure you do this slowly and evenly, making sure to not pore too fast and introduce air bubbles. Continue until the top of the board assembly is completed covered with epoxy. Leave to cure for a minimum of 48 hours as 21C. If your room temperature is cooler, test that the potting solution has cured after 48 hours by touching the surface. It should be completely solid and not tacky or compressible.
+
+ **Stage 5** | Pour the potting solution into the 3D printed insert containing the battery next. Ensure that the battery is fully encapsulated and that it is not at an angle / sticking out. If you need to reorientate the battery's position use a wooden mixing stick to move it whilst in the epoxy (first 30 mins until curing begins).
+
+**Stage 6** | After 48 hours, confirm that curing has completed by touching the surface of both inserts. The potting solution should be solid and not tacky to the touch. Taking care to position the battery cable correctly, secure the lid of the enclosure in place on top of the o-ring and seal the four corners of the enclosure again using the M2 bolts and nuts. Next, secure the middle bolts and then the remaining bolts. Re-visit each bolt and nut, moving around the enclosure and slightly tightening each bolt and nut (not too much force - just enough to be tight) until you are confident that the enclosure has been sealed.
+
+## Including a 500ml plastic water bottle ##
+
+**Stage 1** | The base enclosure was designed to slot into a standard 500ml water bottle. By including a real water bottle, the flow and movement of the device can better match that of an everyday water bottle's movement by matching and improving hydrodynamics, as well as concealing the bottle when visible on the water's surface.
+
+To prepare a bottle, use a hot wire pen or hot wire foam cutter to remove the base of a plastic water bottle. The SLS printed enclosure has a milled bolt hole on the base of the top and bottom enclosures. Using a soldering iron tip, make a hole in the plastic to allow a screw to be placed through the plastic to mate with the enclosure screw hole.
+
+Slot the other half of the bottle onto the SLS enclosure and screw the original bottle lid on. Identify where the screw holes are by making a mark in the bottle lid after it has been fully screwed on. It can help removing it again and slowly screwing it back on, taking care to mark where the screw holes are. Use the soldering iron to make two holes in the lid and then screw in two screws to fix the bottle in place. You have now successfully attached a bottle to the SLS enclosure.
+
+Your finished device / bottle is now ready to be deployed.
+
+The photograph below shows 15 bottles prepared for a deploying in Singapore using reclaimed Mountain Mist Sparkling Sugar Free Pineapple and Passion Fruit Flavour Spring Water 500ml bottles.
+
+![bottles_singapore](https://github.com/arribada/horizon/assets/6997400/285c282a-5fba-49c6-ad27-9589db72179a)
 
 
- It you encounter any issues, investigate before encapsulating you can be sure that your configuration is correct.Turn the board off by holding the magent next to the reed switch again until you see a fast flashing white LED.
-
- **Stage 4** | Prepare 90ml of potting solution. We recommend using MG Chemicals 832-WC. After following the potting solution's preparation guidance, leave the potting solution to de-gas. Whilst de-gassing, use a small amount of hot glue to position the assembled boards inside the 3D printed insert. The simplest way is to to apply a line of glue to the based of the ARTIC R2 transmitter as indicated below. 
-
- **Stage 5** | Pour the potting solution into the 3D insert cavity to encapsulate the electronics. Ensure you do this slowly and evenly, making sure to not pore too fast and introduce air bubbles. Continue until the top of the board assembly is completed covered with epoxy. Leave to cure for a minimum of 48 hours as 21C. If your room temperature is cooler, test that the potting solution has cured after 48 hours by touching the surface. It should be completely solid and not tacky or compressible. 
+ 
 
 
